@@ -2,7 +2,7 @@
 
 namespace peppelg\EzTG;
 
-class EzTGKeyboard
+class Keyboard
 {
     public function __construct($type = 'keyboard', $rkm = ['resize_keyboard' => true, 'keyboard' => []], $secure = false)
     {

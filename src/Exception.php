@@ -4,6 +4,6 @@ namespace peppelg\EzTG;
 
 use Exception;
 
-class EzTGException extends Exception
+class Exception extends Exception
 {
 }
