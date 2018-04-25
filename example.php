@@ -1,6 +1,6 @@
 <?php
 require_once 'EzTG.php';
-$callback = function($update) use ($EzTG) {
+$callback = function($update, $EzTG) {
   if (isset($update->message->text) and $update->message->text == '/start') {
     $EzTG->sendMessage(['chat_id' => $update->message->chat->id, 'text' => "/inline\n/keyboard\n/hidekb"]);
   }
