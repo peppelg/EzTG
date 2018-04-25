@@ -52,7 +52,7 @@ class EzTG {
       } else
         $update->callback_query->data = NULL;
     }
-    $this->settings['callback']($update, $this);
+    $this->settings['callback']($update);
   }
   protected function error($e) {
     throw new EzTGException($e);
