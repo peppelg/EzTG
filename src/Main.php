@@ -77,7 +77,7 @@ class Main
 
     protected function error($e)
     {
-        throw new EzTGException($e);
+        throw new Exception($e);
     }
 
     public function newKeyboard($type = 'keyboard', $rkm = ['resize_keyboard' => true, 'keyboard' => []])
@@ -88,7 +88,7 @@ class Main
             $t = false;
         }
 
-        return new EzTGKeyboard($type, $rkm, $t);
+        return new Keyboard($type, $rkm, $t);
     }
 
     public function __call($name, $arguments)
