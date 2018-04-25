@@ -5,7 +5,7 @@ use \Exception;
 
 class EzTGException extends Exception {}
 
-class EzTG {
+class Main {
     private $settings;
     private $offset;
 
@@ -42,16 +42,17 @@ class EzTG {
         }
         curl_close($ch);
     }
-    private function processUpdate($update) {
+    private function processUpdate($update){
         if($this->settings['secure_callbacks'] and isset($update->callback_query->data) and $update->callback_query->data[0] === '!'){
             $data = json_decode(substr($update->callback_query->data, 1), 1);
             if(is_array($data) and isset($data['h']) and isset($data['c'])){
                 if ($data['h'] === hash('crc32b', $data['c'] . ';'.$this->settings['token'])) $update->callback_query->data = $data['c'];
-            else $update->callback_query->data = NULL;
-        } else {
-            $update->callback_query->data = NULL;
+                else $update->callback_query->data = NULL;
+            } else {
+                $update->callback_query->data = NULL;
+            }
+            $this->settings['callback']($update, $this);
         }
-        $this->settings['callback']($update, $this);
     }
     protected function error($e){
         throw new EzTGException($e);

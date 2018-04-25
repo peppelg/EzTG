@@ -1,0 +1,22 @@
+{
+    "name": "peppelg/eztg",
+    "description": "Easy way to create a Telegram Bot!",
+    "type": "library",
+    "authors": [
+        {
+            "name": "TRIGGEREDNICK"
+        },
+        {
+        	"name": "peppleg"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    	"php": ">=5.6"
+    },
+    "autoload": {
+    	"psr-4": {
+    		"peppelg\\EzTG\\": "src/"
+    	}
+    }
+}
