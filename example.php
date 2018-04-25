@@ -30,4 +30,4 @@ $callback = function ($update, $EzTG) {
     }
 };
 
-$EzTG = new peppelg\EzTG\Main(['token' => 'token', 'callback' => $callback]);
+$EzTG = new TRIGGEREDNICK\EzTG\Main(['token' => 'token', 'callback' => $callback]);

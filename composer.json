@@ -1,5 +1,5 @@
 {
-    "name": "peppelg/eztg",
+    "name": "triggerednick/eztg",
     "description": "Easy way to create a Telegram Bot!",
     "type": "library",
     "authors": [
@@ -16,7 +16,7 @@
     },
     "autoload": {
     	"psr-4": {
-    		"peppelg\\EzTG\\": "src/"
+    		"TRIGGEREDNICK\\EzTG\\": "src/"
     	}
     }
 }

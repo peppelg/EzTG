@@ -1,6 +1,6 @@
 <?php
 
-namespace peppelg\EzTG;
+namespace TRIGGEREDNICK\EzTG;
 
 class Main
 {
