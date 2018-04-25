@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/vendor/autoload.php';
 
-$callback = function ($update, $EzTG) {
+$callback = function ($update) use ($EzTG) {
     if (isset($update->message->text) and $update->message->text == '/start') {
         $EzTG->sendMessage(['chat_id' => $update->message->chat->id, 'text' => "/inline\n/keyboard\n/hidekb"]);
     }
