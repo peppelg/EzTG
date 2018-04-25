@@ -2,6 +2,7 @@
     "name": "triggerednick/eztg",
     "description": "Easy way to create a Telegram Bot!",
     "type": "library",
+    "license": "GPL-3.0",
     "authors": [
         {
             "name": "TRIGGEREDNICK"
