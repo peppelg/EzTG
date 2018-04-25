@@ -71,7 +71,7 @@ class Main
             } else {
                 $update->callback_query->data = null;
             }
-            $this->settings['callback']($update, $this);
+            $this->settings['callback']($update);
         }
     }
 
