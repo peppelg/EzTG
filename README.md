@@ -1,2 +1,3 @@
 # EzTG
-[EzTG minimal](https://github.com/peppelg/EzTG/tree/minimal)
+lavori in corso . . .
+guarda l'esempio ,..    .
