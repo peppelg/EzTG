@@ -1,89 +1,114 @@
 <?php
+set_time_limit(0);
 class EzTGException extends Exception {
 }
 class EzTG {
   private $settings;
   private $offset;
-  public function __construct($settings) {
-    if (!isset($settings['endpoint']))
-      $settings['endpoint'] = 'https://api.telegram.org';
-    if (!isset($settings['token']))
-      $this->error('Invalid token.');
-    if (!isset($settings['secure_callbacks']))
-      $settings['secure_callbacks'] = true;
-    if (!isset($settings['callback']))
-      $this->error('Invalid callback.');
-    if (!is_callable($settings['callback']))
-      $this->error('Invalid callback.');
-    $this->settings = $settings;
+  public function __construct($settings, $base = false) {
+    $this->settings = array_merge(array(
+      'endpoint' => 'https://api.telegram.org',
+      'token' => '1234:abcd',
+      'callback' => function($update, $EzTG) {
+        echo 'no callback' . PHP_EOL;
+      },
+      'objects' => true,
+      'throw_telegram_errors' => true
+    ), $settings);
+    if ($base !== false)
+      return true;
+    if (!is_callable($this->settings['callback']))
+      $this->error('Invalid callback.', true);
     if (php_sapi_name() === 'cli') {
       $this->offset = -1;
-      $this->getUpdates();
+      $this->get_updates();
     } else {
       $this->processUpdate(json_decode(file_get_contents('php://input')));
     }
   }
-  private function getUpdates() {
+  private function get_updates() {
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $this->settings['endpoint'] . '/bot' . $this->settings['token'] . '/' . 'getUpdates');
-    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_URL, $this->settings['endpoint'] . '/bot' . $this->settings['token'] . '/getUpdates');
+    curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     while (true) {
       curl_setopt($ch, CURLOPT_POSTFIELDS, 'offset=' . $this->offset . '&timeout=10');
-      $result = json_decode(curl_exec($ch));
-      if ($result->ok == 0)
-        $this->error($result->description);
-      foreach ($result->result as $update) {
-        if (isset($update->update_id))
-          $this->offset = $update->update_id + 1;
-        $this->processUpdate($update);
+      if ($this->settings['objects'] === true) {
+        $result = json_decode(curl_exec($ch));
+        if (isset($result->ok) and $result->ok === false)
+          $this->error($result->description, false);
+        elseif (isset($result->result)) {
+          foreach ($result->result as $update) {
+            if (isset($update->update_id))
+              $this->offset = $update->update_id + 1;
+            $this->processUpdate($update);
+          }
+        }
+      } else {
+        $result = json_decode(curl_exec($ch), true);
+        if (isset($result['ok']) and $result['ok'] === false)
+          $this->error($result['description'], false);
+        elseif (isset($result['result'])) {
+          foreach ($result['result'] as $update) {
+            if (isset($update['update_id']))
+              $this->offset = $update['update_id'] + 1;
+            $this->processUpdate($update);
+          }
+        }
       }
     }
-    curl_close($ch);
   }
-  private function processUpdate($update) {
-    if ($this->settings['secure_callbacks'] and isset($update->callback_query->data) and $update->callback_query->data[0] === '!') {
-      $data = json_decode(substr($update->callback_query->data, 1), 1);
-      if (is_array($data) and isset($data['h']) and isset($data['c'])) {
-        if ($data['h'] === hash('crc32b', $data['c'] . ';' . $this->settings['token']))
-          $update->callback_query->data = $data['c'];
-        else
-          $update->callback_query->data = NULL;
-      } else
-        $update->callback_query->data = NULL;
-    }
+  public function processUpdate($update) {
     $this->settings['callback']($update, $this);
   }
-  protected function error($e) {
-    throw new EzTGException($e);
+  protected function error($e, $throw = 'default') {
+    if ($throw === 'default')
+      $throw = $this->settings['throw_telegram_errors'];
+    print_r($throw);
+    if ($throw === true)
+      throw new EzTGException($e);
+    else {
+      echo 'Telegram error: ' . $e . PHP_EOL;
+      return array(
+        'ok' => false,
+        'description' => $e
+      );
+    }
   }
   public function newKeyboard($type = 'keyboard', $rkm = array('resize_keyboard' => true, 'keyboard' => array())) {
-    if ($this->settings['secure_callbacks'])
-      $t = $this->settings['token'];
-    else
-      $t = false;
-    return new EzTGKeyboard($type, $rkm, $t);
+    return new EzTGKeyboard($type, $rkm);
   }
   public function __call($name, $arguments) {
     if (!isset($arguments[0]))
       $arguments[0] = array();
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $this->settings['endpoint'] . '/bot' . $this->settings['token'] . '/' . urlencode($name));
-    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($arguments[0]));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $result = json_decode(curl_exec($ch));
+    if ($this->settings['objects'] === true)
+      $result = json_decode(curl_exec($ch));
+    else
+      $result = json_decode(curl_exec($ch), true);
     curl_close($ch);
-    if ($result->ok == 0)
-      $this->error($result->description);
-    return $result->result;
+    if ($this->settings['objects'] === true) {
+      if (isset($result->ok) and $result->ok === false)
+        return $this->error($result->description);
+      if (isset($result->result))
+        return $result->result;
+    } else {
+      if (isset($result['ok']) and $result['ok'] === false)
+        return $this->error($result['description']);
+      if (isset($result['result']))
+        return $result['result'];
+    }
+    return $this->error('Unknown error', false);
   }
 }
 class EzTGKeyboard {
-  public function __construct($type = 'keyboard', $rkm = array('resize_keyboard' => true, 'keyboard' => array()), $secure = false) {
-    $this->line   = 0;
-    $this->type   = $type;
-    $this->secure = $secure;
+  public function __construct($type = 'keyboard', $rkm = array('resize_keyboard' => true, 'keyboard' => array())) {
+    $this->line = 0;
+    $this->type = $type;
     if ($type === 'inline')
       $this->keyboard = array(
         'inline_keyboard' => array()
@@ -103,12 +128,6 @@ class EzTGKeyboard {
           $type = 'url';
         else
           $type = 'callback_data';
-      if ($type === 'callback_data' and $this->secure) {
-        $callback_data = '!' . json_encode(array(
-          'c' => $callback_data,
-          'h' => hash('crc32b', $callback_data . ';' . $this->secure)
-        ));
-      }
       array_push($this->keyboard['inline_keyboard'][$this->line], array(
         'text' => $text,
         $type => $callback_data
