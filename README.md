@@ -12,6 +12,7 @@ Robot dei tuoi dreams. Now possibile réalisation .
 ## Features
 * Magic keyboard builder,.,
 * Magic json_payload tech's
+* Ez to use 🤥
 * Update handler
 * OO
 
