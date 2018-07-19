@@ -15,7 +15,7 @@ class EzTG {
       },
       'objects' => true,
       'throw_telegram_errors' => true,
-      'magic_json_payload' => true
+      'magic_json_payload' => false
     ), $settings);
     if ($base !== false)
       return true;
