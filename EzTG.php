@@ -31,7 +31,11 @@ class EzTG {
         $this->json_payload = false;
         register_shutdown_function(array($this, 'send_json_payload'));
       }
-      $this->processUpdate(json_decode(file_get_contents('php://input')));
+      if ($this->settings['objects'] === true) {
+        $this->processUpdate(json_decode(file_get_contents('php://input'), true));
+      } else {
+        $this->processUpdate(json_decode(file_get_contents('php://input')));
+      }
     }
   }
   private function get_updates() {
