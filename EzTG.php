@@ -32,9 +32,9 @@ class EzTG {
         register_shutdown_function(array($this, 'send_json_payload'));
       }
       if ($this->settings['objects'] === true) {
-        $this->processUpdate(json_decode(file_get_contents('php://input'), true));
-      } else {
         $this->processUpdate(json_decode(file_get_contents('php://input')));
+      } else {
+        $this->processUpdate(json_decode(file_get_contents('php://input'), true));
       }
     }
   }
