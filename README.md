@@ -11,6 +11,7 @@ Robot dei tuoi dreams. Now possibile réalisation .
 
 ---
 ## Features
+* Webhook and long polling supported
 * Magic keyboard builder,.,
 * Magic json_payload tech's
 * Allow only Telegram requests (professional anti hacker proteccion)
@@ -22,7 +23,10 @@ Robot dei tuoi dreams. Now possibile réalisation .
 
 ---
 ## Getting started
-Just include EzTG.php in your tech's 💋
+Copy and paste EzTG.php and example.php to your servidor; put your telegram bot token in example.php 💋
+
+- **Webhook**: set webhook to example.php (replace <token> with ur telegram bot token and <yoursite> with your site in `https://api.telegram.org/bot<token>/setwebhook?url=https://<yoursite>/example.php` and open it in ur browser tacabro)
+- **Long polling**: `php example.php` 
 
 ---
 ## How to use other methods
