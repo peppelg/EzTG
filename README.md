@@ -15,6 +15,8 @@ Robot dei tuoi dreams. Now possibile réalisation .
 * Magic json_payload tech's
 * Allow only Telegram requests (professional anti hacker proteccion)
 * Ez to use 🤥
+* Always up-to-date to the latest telegram bot api by ..magics 🤩
+* U can use every telegram bot api method ...,. 🤩🤩🤩
 * Update handler
 * OO
 
