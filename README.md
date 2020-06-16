@@ -1,45 +1,51 @@
 # EzTG
-Robot dei tuoi dreams. Now possibile réalisation .
+
+⚡️ EzTG is a minimal async (& non-async) Telegram Bot Api Framework.
+It's available for Python and PHP.
+
+The methods are the same of the [Telegram Bot Api](https://core.telegram.org/bots/api), so you don't need to learn anything new.
+
+
+  
 
 ---
+
 ## Index
-* [eZtG's magic's fEatures 's 💋](#features)
-* [gEtting 😱 sTArted 😍](#getting-started)
-* [👺how2 uSe other ,methods 🤩](#how-to-use-other-methods)
-* [💰 Support GruPa 🤑](#support)
-* [😩 ToDo 😫](#todo)
 
----
-## Features
-* Webhook and long polling supported
-* Magic keyboard builder,.,
-* Magic json_payload tech's
-* Allow only Telegram requests (professional anti hacker proteccion)
-* Ez to use 🤥
-* Always up-to-date to the latest telegram bot api by ..magics 🤩
-* U can use every telegram bot api method ...,. 🤩🤩🤩
-* Update handler
-* OO
+*  [🌟 Getting started](#getting-started)
+
+*  [📖 How to call a method](#calling-methods)
+
+*  [ℹ️ Telegram help group](#help)
+
 
 ---
 ## Getting started
-Copy and paste EzTG.php and example.php to your servidor; put your telegram bot token in example.php 💋
+Choose the version you prefer:
 
-- **Webhook**: set webhook to example.php (replace <token> with ur telegram bot token and <yoursite> with your site in `https://api.telegram.org/bot<token>/setwebhook?url=https://<yoursite>/example.php` and open it in ur browser tacabro)
-- **Long polling**: `php example.php` 
+- [PHP non-async](https://github.com/peppelg/EzTG/tree/master/PHP/Standard)
+- [Python non-async](https://github.com/peppelg/EzTG/tree/master/Python/Standard)
+- [Python async](https://github.com/peppelg/EzTG/tree/master/Python/Async)
 
----
-## How to use other methods
-Tacabro, is ez.,.,. open [Bot api and EzTG docs](https://core.telegram.org/bots/api) and copy && pasta tacabros ez .
 
-Watch: [[TUTORIAL] HOW TO SEND A PHOTO WITH EZTG](https://youtu.be/l7dSa7KS1S0)
+## Calling methods
+The methods are the same of the Telegram Bot Api. So, if you want to send a message, you will use the [sendMessage](https://core.telegram.org/bots/api#sendmessage) method. 
+![Example](https://i.imgur.com/XiNHYU4.png)
+`chat_id` and `text` are required. So...
 
-# Support
-[Our meraviglios grupa 🇮🇹🇮🇹🇮🇹](https://t.me/joinchat/HIyPnk3GQ7525LpP62yIWA)
+Python: `bot.sendMessage(chat_id=1234, text='hi!')`
 
----
-# Todo
-- [x] [Docs](https://core.telegram.org/bots/api) ha ha 
-- [ ] Docs+++
-- [x] Readme
-- [ ] More examples
+PHP: `$bot.sendMessage(['chat_id' => 1234, 'text' => 'hi!']);`
+
+To find the current [chat id](https://core.telegram.org/bots/api#chat): `chat_id = update['message']['chat']['id']`
+
+[[tutorial] How to send a photo using EzTG](https://youtu.be/l7dSa7KS1S0)
+
+Take a look at the `example.py/example.php` file.
+
+
+# Help
+
+[EzTG and TGUserbot group](https://t.me/joinchat/HIyPnk3GQ7525LpP62yIWA)
+
+ 
