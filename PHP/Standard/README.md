@@ -16,7 +16,7 @@ To set the webhook, open `https://api.telegram.org/botYOUR_TOKEN_HERE/setWebhook
 ## EzTG constructor settings
 |                       	|                                 	|                                                                                                                                                    	|
 |-----------------------	|---------------------------------	|----------------------------------------------------------------------------------------------------------------------------------------------------	|
-| endpoint              	| string:https://api.telegram.org 	| Telegram bot api endpoint.                                                                                                                         	|
+| endpoint              	| string:`https://api.telegram.org` 	| Telegram bot api endpoint.                                                                                                                         	|
 | token                 	| string                          	| Your bot token.                                                                                                                                    	|
 | callback              	| callable                        	| Function to call when the bot receives an update.                                                                                                  	|
 | objects               	| boolean:`true`                    	| Use objects. If false, an array will be returned (json_decode 1).                                                                                  	|
