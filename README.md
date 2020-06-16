@@ -31,6 +31,7 @@ Choose the version you prefer:
 ## Calling methods
 The methods are the same of the Telegram Bot Api. So, if you want to send a message, you will use the [sendMessage](https://core.telegram.org/bots/api#sendmessage) method. 
 ![Example](https://i.imgur.com/XiNHYU4.png)
+
 `chat_id` and `text` are required. So...
 
 Python: `bot.sendMessage(chat_id=1234, text='hi!')`
